@@ -45,4 +45,5 @@ function love.draw()
             love.graphics.rectangle("fill", x * tileSize, y * tileSize, tileSize, tileSize)
         end
     end)
+    for k,v in Boids
 end
