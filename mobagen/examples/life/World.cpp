@@ -46,7 +46,7 @@ bool World::Get(Point2D point) {
   return buffer[currentBufferId % 2][index];
 }
 void World::Randomize() {
-  for (auto&& elem : buffer[0]) elem = (Random::Range(0, 1) != 0);
+  for (auto&& elem : buffer[0]) elem = (Random::Range(0, 10) <= 4);
 
   for (int i = 0; i < buffer[0].size(); i++) buffer[1][i] = buffer[0][i];
 }

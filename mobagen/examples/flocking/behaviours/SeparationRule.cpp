@@ -16,6 +16,22 @@ Vector2f SeparationRule::computeForce(const std::vector<Boid*>& neighborhood, Bo
   //        // todo: find and apply force only on the closest mates
   //    }
 
+  if (neighborhood.empty()) return Vector2f::zero(); 
+
+  int closeNeighborCount = 0;
+  Vector2f closeNeighborPositionAverage = Vector2f::zero();
+  for (const Boid* neighbor : neighborhood) {
+    if (boid->getPosition().Distance(neighbor->getPosition()) < desiredMinimalDistance) {
+      closeNeighborPositionAverage += neighbor->getPosition();
+      closeNeighborCount++;
+    }
+  }
+
+  if (closeNeighborCount == 0) return Vector2f::zero();
+
+  closeNeighborPositionAverage /= (float)closeNeighborCount;
+
+  separatingForce = boid->getPosition() - closeNeighborPositionAverage;
   separatingForce = Vector2f::normalized(separatingForce);
 
   return separatingForce;

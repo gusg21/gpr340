@@ -8,6 +8,7 @@
 
 class HuntAndKillExample : public MazeGeneratorBase {
 private:
+  bool done;
   std::vector<Point2D> stack;
   std::map<int, std::map<int, bool>> visited;  // naive. not optimal
   Point2D randomStartPoint(World* world);

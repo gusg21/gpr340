@@ -13,25 +13,25 @@ Vector2f BoundedAreaRule::computeForce(const std::vector<Boid*>& neighborhood, B
 
   // Turn around if close to edge
   if (myPos.x < desiredDistance) {
-    force.x = weight;
+    force.x = abs(force.x);
   } 
   if (myPos.x > windowSize.x - desiredDistance) {
-    force.x = -weight;
+    force.x = -abs(force.x);
   }
   if (myPos.y < desiredDistance) {
-    force.y = weight;
+    force.y = abs(force.y);
   }
   if (myPos.y > windowSize.y - desiredDistance) {
-    force.y = -weight;
+    force.y = -abs(force.y);
   }
 
   // Recenter if out of bounds
   if (myPos.x < 0 || myPos.y < 0 || myPos.x > windowSize.x || myPos.y > windowSize.y) {
     auto center = Vector2f(windowSize.x / 2.f, windowSize.y / 2.f);
-    force = (center - myPos).normalized() * weight;
+    force = (center - myPos).normalized();
   }
 
-  return force;
+  return force.normalized();
 }
 
 bool BoundedAreaRule::drawImguiRuleExtra() {
