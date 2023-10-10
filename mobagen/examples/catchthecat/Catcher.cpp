@@ -131,6 +131,35 @@ Point2D Catcher::Move(World* world) {
     }
   }
 
+  // Left + right edge
+  for (int y = -sideSizeOver2; y <= sideSizeOver2; y++) {
+    // Left
+    auto point = Point2D(-sideSizeOver2, y);
+    if (world->isValidPosition(point)) {
+      int pointDistance = distanceMap[point];
+      if (pointDistance == -1) continue;         // Wall
+      if (pointDistance == _INFINITY) continue;  // Inaccessible
+
+      if (pointDistance < bestDistance) {
+        bestDistance = pointDistance;
+        bestLocation = point;
+      }
+    }
+
+    // Right
+    point = Point2D(sideSizeOver2, y);
+    if (world->isValidPosition(point)) {
+      int pointDistance = distanceMap[point];
+      if (pointDistance == -1) continue;         // Wall
+      if (pointDistance == _INFINITY) continue;  // Inaccessible
+
+      if (pointDistance < bestDistance) {
+        bestDistance = pointDistance;
+        bestLocation = point;
+      }
+    }
+  }
+
   if (bestLocation == INVALID_LOCATION) {  // Nowhere to go!
     auto side = world->getWorldSideSize();
     auto sideOver2 = world->getWorldSideSize() / 2;
